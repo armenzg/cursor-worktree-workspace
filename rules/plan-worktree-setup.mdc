@@ -1,0 +1,48 @@
+---
+description: Include worktree setup in Cursor plans for getsentry, sentry, and seer implementation work
+alwaysApply: true
+---
+
+# Worktree-first Cursor plans
+
+When creating or updating a Cursor plan (`.cursor/plans/*.plan.md`) for **implementation work** in `getsentry`, `sentry`, or `seer`, always include isolated worktree setup so the agent runs in a scoped workspace instead of the multi-repo sandbox.
+
+## Required in plan frontmatter
+
+```yaml
+worktree:
+  repo: getsentry          # getsentry | sentry | seer
+  branch: feat/my-feature
+  base: master             # optional
+  siblings:                # optional; getsentry defaults to sentry
+    - sentry
+todos:
+  - id: worktree-setup
+    content: Create worktree and open scoped Cursor workspace
+    status: pending
+  # ...implementation todos
+```
+
+## Required in plan body
+
+Add a **Worktree setup** section with the exact command:
+
+```bash
+$HOME/.cursor/skills/create-worktree-workspace/scripts/create-worktree-workspace.sh \
+  --repo REPO \
+  --branch BRANCH \
+  [--plan PATH]
+```
+
+## Execution rules
+
+1. Run `worktree-setup` first via the `create-worktree-workspace` skill (script needs `required_permissions: ["all"]`).
+2. Pass `--plan` when a plan file already exists so it is copied into the worktree's `.cursor/plans/`.
+3. Tell the user to continue in the new Cursor window. Do **not** implement feature todos in the planning workspace after the worktree window opens.
+4. In the worktree window, verify `pwd`, branch, and `.venv` before marking `worktree-setup` complete.
+
+## Skip worktree setup only when
+
+- The user explicitly says to work in the current checkout
+- The plan is docs-only, research-only, or has no code changes
+- The branch and worktree already exist and the user is already in that workspace
