@@ -1,0 +1,12 @@
+{
+  "name": "create-worktree-workspace",
+  "version": "1.0.0",
+  "description": "Create an isolated git worktree, generate a scoped Cursor workspace, and open it in a new window.",
+  "author": {
+    "name": "Armen Zambrano G.",
+    "email": "44410+armenzg@users.noreply.github.com"
+  },
+  "homepage": "https://github.com/armenzg/cursor-worktree-workspace",
+  "repository": "https://github.com/armenzg/cursor-worktree-workspace",
+  "keywords": ["worktree", "workspace", "sentry", "getsentry", "cursor"]
+}

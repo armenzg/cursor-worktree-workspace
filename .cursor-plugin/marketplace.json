@@ -1,0 +1,17 @@
+{
+  "name": "cursor-worktree-workspace",
+  "owner": {
+    "name": "Armen Zambrano G.",
+    "email": "44410+armenzg@users.noreply.github.com"
+  },
+  "metadata": {
+    "description": "Isolated git worktree + scoped Cursor workspace for Sentry-style checkouts"
+  },
+  "plugins": [
+    {
+      "name": "create-worktree-workspace",
+      "source": "./",
+      "description": "Create an isolated git worktree, generate a scoped Cursor workspace, and open it in a new window."
+    }
+  ]
+}
