@@ -29,8 +29,8 @@ https://github.com/armenzg/cursor-worktree-workspace
 1. Open **Customize** in the Cursor sidebar.
 2. Add a marketplace **From GitHub Repository**.
 3. Paste `https://github.com/armenzg/cursor-worktree-workspace`.
-4. Install the **create-worktree-workspace** plugin (user or project scope).
-5. Confirm in Customize → Skills that `create-worktree-workspace` is listed.
+4. Install the **manage-worktree-workspace** plugin (user or project scope).
+5. Confirm in Customize → Skills that `manage-worktree-workspace` is listed.
    The plan rule `plan-worktree-setup` appears with other rules.
 
 CLI equivalent (Cursor CLI):
@@ -39,7 +39,7 @@ CLI equivalent (Cursor CLI):
 agent plugin marketplace add https://github.com/armenzg/cursor-worktree-workspace
 ```
 
-Then install **create-worktree-workspace** from `/plugin` or Customize.
+Then install **manage-worktree-workspace** from `/plugin` or Customize.
 
 ### Option B — Team marketplace
 
@@ -47,7 +47,7 @@ If your org uses Cursor Teams/Enterprise and this repo is already imported as a
 team marketplace, skip the GitHub URL:
 
 1. Open **Customize**.
-2. Find **create-worktree-workspace** under the team marketplace.
+2. Find **manage-worktree-workspace** under the team marketplace.
 3. Install it (unless an admin already set it to Default On or Required).
 
 ### Option C — Clone + symlink (local, no plugin)
@@ -87,14 +87,14 @@ the worktree `.venv` symlink resolves.
 
 After install, in Cursor chat:
 
-> Use the create-worktree-workspace skill for a `feat/try-worktree` branch in sentry
+> Use the manage-worktree-workspace skill for a `feat/try-worktree` branch in sentry
 
 Or run the script (path depends on how you installed):
 
 ```bash
 # plugin install: Cursor copies the plugin under ~/.cursor/plugins/…
 # local symlink:
-~/.cursor/skills/create-worktree-workspace/scripts/create-worktree-workspace.sh \
+~/.cursor/skills/manage-worktree-workspace/scripts/manage-worktree-workspace.sh \
   --repo sentry \
   --branch feat/try-worktree
 ```
@@ -116,7 +116,7 @@ changing skills, rules, or scripts, merge to the branch the marketplace tracks
 **Team marketplace (Sentry / other Teams orgs)**
 
 1. Dashboard → **Plugins & MCPs** → **Add Marketplace** → **Import from Repo**.
-2. Paste this repository URL, add **create-worktree-workspace** to the
+2. Paste this repository URL, add **manage-worktree-workspace** to the
    marketplace, save.
 3. Under Marketplace Settings, turn on **Enable Auto Refresh** and install the
    [Cursor GitHub App](https://cursor.com/docs/plugins) on this repo.
@@ -149,9 +149,9 @@ the GitHub import above so this repository stays the source of truth.
 .cursor-plugin/
   plugin.json                           # Cursor Plugin manifest
   marketplace.json                      # lets Customize import this repo
-skills/create-worktree-workspace/
+skills/manage-worktree-workspace/
   SKILL.md                              # agent instructions
-  scripts/create-worktree-workspace.sh  # worktree + workspace helper
+  scripts/manage-worktree-workspace.sh  # worktree + workspace helper
 rules/plan-worktree-setup.mdc           # optional always-apply plan rule
 install.sh                              # local ~/.cursor/skills symlink
 ```

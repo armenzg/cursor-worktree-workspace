@@ -1,9 +1,9 @@
 ---
-name: create-worktree-workspace
-description: Create a git worktree, generate a scoped Cursor workspace, and open it in a new window. Use when planning or starting feature work, when a plan includes worktree setup or a worktree-setup todo, or when the user asks to work in an isolated worktree workspace instead of the multi-repo sandbox. If the plan has no worktree block, propose repo/branch from context and create after a brief confirmation.
+name: manage-worktree-workspace
+description: Manage a git worktree, generate a scoped Cursor workspace, and open it in a new window. Use when planning or starting feature work, when a plan includes worktree setup or a worktree-setup todo, or when the user asks to work in an isolated worktree workspace instead of the multi-repo sandbox. If the plan has no worktree block, propose repo/branch from context and create after a brief confirmation.
 ---
 
-# Create Worktree Workspace
+# Manage Worktree Workspace
 
 Spin up an isolated git worktree and open a dedicated Cursor window scoped to that worktree. This keeps agent shell commands inside the worktree checkout so fewer commands need sandbox elevation.
 
@@ -14,13 +14,13 @@ Pair this skill with Cursor plans: add a `worktree` block and a first todo for s
 The companion script ships with this skill:
 
 ```text
-~/.cursor/skills/create-worktree-workspace/scripts/create-worktree-workspace.sh
+~/.cursor/skills/manage-worktree-workspace/scripts/manage-worktree-workspace.sh
 ```
 
 If that path does not exist, fall back to the clone path from install:
 
 ```text
-$REPO_ROOT/skills/create-worktree-workspace/scripts/create-worktree-workspace.sh
+$REPO_ROOT/skills/manage-worktree-workspace/scripts/manage-worktree-workspace.sh
 ```
 
 Override checkout layout with `CODE_ROOT` (default: `$HOME/code`) and `WORKSPACES_DIR` (default: `$CODE_ROOT/workspaces`).
@@ -35,7 +35,7 @@ Override checkout layout with `CODE_ROOT` (default: `$HOME/code`) and `WORKSPACE
 ## Quick start
 
 ```bash
-SCRIPT="$HOME/.cursor/skills/create-worktree-workspace/scripts/create-worktree-workspace.sh"
+SCRIPT="$HOME/.cursor/skills/manage-worktree-workspace/scripts/manage-worktree-workspace.sh"
 
 "$SCRIPT" \
   --repo getsentry \
@@ -75,7 +75,7 @@ worktree:
     - options
 todos:
   - id: worktree-setup
-    content: Create worktree and open scoped Cursor workspace (run create-worktree-workspace skill)
+    content: Create worktree and open scoped Cursor workspace (run manage-worktree-workspace skill)
     status: pending
   - id: implement-change
     content: ...
@@ -91,7 +91,7 @@ In the plan body, add a short **Worktree setup** section with the exact command:
 Run in the planning workspace (or any checkout of the main repo):
 
 \`\`\`bash
-$HOME/.cursor/skills/create-worktree-workspace/scripts/create-worktree-workspace.sh \
+$HOME/.cursor/skills/manage-worktree-workspace/scripts/manage-worktree-workspace.sh \
   --repo getsentry \
   --branch feat/my-feature \
   --plan ~/.cursor/plans/my-feature_<id>.plan.md
@@ -112,7 +112,7 @@ cp PLAN_PATH WORKTREE/.cursor/plans/
 ## Workflow (agent steps)
 
 1. Resolve `repo` + `branch` (see **Missing worktree block** below). Prefer the plan's `worktree` frontmatter when present.
-2. Run `create-worktree-workspace.sh`. Pass `--plan` when the plan file exists. Use `required_permissions: ["all"]` — the script writes under `$CODE_ROOT` and launches Cursor.
+2. Run `manage-worktree-workspace.sh`. Pass `--plan` when the plan file exists. Use `required_permissions: ["all"]` — the script writes under `$CODE_ROOT` and launches Cursor.
 3. Tell the user to continue in the new Cursor window. Do not implement feature todos in the planning workspace once the worktree window is open.
 4. In the worktree window, verify context:
    ```bash

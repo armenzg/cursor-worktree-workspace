@@ -9,9 +9,9 @@
   },
   "plugins": [
     {
-      "name": "create-worktree-workspace",
+      "name": "manage-worktree-workspace",
       "source": "./",
-      "description": "Create an isolated git worktree, generate a scoped Cursor workspace, and open it in a new window."
+      "description": "Manage an isolated git worktree, generate a scoped Cursor workspace, and open it in a new window."
     }
   ]
 }

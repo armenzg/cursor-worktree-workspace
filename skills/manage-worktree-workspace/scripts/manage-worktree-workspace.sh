@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 #
-# create-worktree-workspace.sh
+# manage-worktree-workspace.sh
 #
 # Create (or reuse) a git worktree, write a scoped .code-workspace file, and
 # optionally open it in a new Cursor window.
 #
 # Usage:
-#   create-worktree-workspace.sh --repo getsentry --branch feat/my-thing
-#   create-worktree-workspace.sh --repo sentry --branch fix/foo --sibling relay
-#   create-worktree-workspace.sh --repo getsentry --path ~/code/getsentry-armenzg-foo --open-only
+#   manage-worktree-workspace.sh --repo getsentry --branch feat/my-thing
+#   manage-worktree-workspace.sh --repo sentry --branch feat/foo --sibling relay
+#   manage-worktree-workspace.sh --repo getsentry --path ~/code/getsentry-armenzg-foo --open-only
 #
 # Options:
 #   --repo REPO          getsentry | sentry | seer (required unless --open-only with --path)

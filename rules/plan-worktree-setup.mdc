@@ -28,7 +28,7 @@ todos:
 Add a **Worktree setup** section with the exact command:
 
 ```bash
-$HOME/.cursor/skills/create-worktree-workspace/scripts/create-worktree-workspace.sh \
+$HOME/.cursor/skills/manage-worktree-workspace/scripts/manage-worktree-workspace.sh \
   --repo REPO \
   --branch BRANCH \
   [--plan PATH]
@@ -36,7 +36,7 @@ $HOME/.cursor/skills/create-worktree-workspace/scripts/create-worktree-workspace
 
 ## Execution rules
 
-1. Run `worktree-setup` first via the `create-worktree-workspace` skill (script needs `required_permissions: ["all"]`).
+1. Run `worktree-setup` first via the `manage-worktree-workspace` skill (script needs `required_permissions: ["all"]`).
 2. Pass `--plan` when a plan file already exists so it is copied into the worktree's `.cursor/plans/`.
 3. Tell the user to continue in the new Cursor window. Do **not** implement feature todos in the planning workspace after the worktree window opens.
 4. In the worktree window, verify `pwd`, branch, and `.venv` before marking `worktree-setup` complete.

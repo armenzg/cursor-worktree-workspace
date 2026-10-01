@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Install create-worktree-workspace skill (and optionally the plan rule) into Cursor.
+# Install manage-worktree-workspace skill (and optionally the plan rule) into Cursor.
 #
 # Usage:
 #   ./install.sh              # skill only
@@ -10,13 +10,14 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")" && pwd)"
-SKILL_SRC="$REPO_ROOT/skills/create-worktree-workspace"
+SKILL_SRC="$REPO_ROOT/skills/manage-worktree-workspace"
 RULE_SRC="$REPO_ROOT/rules/plan-worktree-setup.mdc"
 
 SKILLS_DIR="${CURSOR_SKILLS_DIR:-$HOME/.cursor/skills}"
 RULES_DIR="${CURSOR_RULES_DIR:-$HOME/.cursor/rules}"
 
-SKILL_DEST="$SKILLS_DIR/create-worktree-workspace"
+SKILL_DEST="$SKILLS_DIR/manage-worktree-workspace"
+LEGACY_SKILL_DEST="$SKILLS_DIR/create-worktree-workspace"
 RULE_DEST="$RULES_DIR/plan-worktree-setup.mdc"
 
 WITH_RULE=0
@@ -46,13 +47,19 @@ link_or_replace() {
   echo "linked: $dest -> $src"
 }
 
-if [[ "$UNINSTALL" -eq 1 ]]; then
-  if [[ -L "$SKILL_DEST" ]]; then
-    rm "$SKILL_DEST"
-    echo "removed: $SKILL_DEST"
+remove_symlink() {
+  local dest="$1"
+  if [[ -L "$dest" ]]; then
+    rm "$dest"
+    echo "removed: $dest"
   else
-    echo "skip (not a symlink or missing): $SKILL_DEST"
+    echo "skip (not a symlink or missing): $dest"
   fi
+}
+
+if [[ "$UNINSTALL" -eq 1 ]]; then
+  remove_symlink "$SKILL_DEST"
+  remove_symlink "$LEGACY_SKILL_DEST"
   if [[ -L "$RULE_DEST" ]]; then
     rm "$RULE_DEST"
     echo "removed: $RULE_DEST"
@@ -63,10 +70,14 @@ if [[ "$UNINSTALL" -eq 1 ]]; then
 fi
 
 [[ -d "$SKILL_SRC" ]] || { echo "error: skill not found at $SKILL_SRC" >&2; exit 1; }
-[[ -x "$SKILL_SRC/scripts/create-worktree-workspace.sh" ]] || \
-  chmod +x "$SKILL_SRC/scripts/create-worktree-workspace.sh"
+[[ -x "$SKILL_SRC/scripts/manage-worktree-workspace.sh" ]] || \
+  chmod +x "$SKILL_SRC/scripts/manage-worktree-workspace.sh"
 
 link_or_replace "$SKILL_SRC" "$SKILL_DEST"
+if [[ -L "$LEGACY_SKILL_DEST" || -e "$LEGACY_SKILL_DEST" ]]; then
+  rm -rf "$LEGACY_SKILL_DEST"
+  echo "removed legacy skill: $LEGACY_SKILL_DEST"
+fi
 
 if [[ "$WITH_RULE" -eq 1 ]]; then
   [[ -f "$RULE_SRC" ]] || { echo "error: rule not found at $RULE_SRC" >&2; exit 1; }
@@ -81,7 +92,7 @@ fi
 
 echo
 echo "Try it:"
-echo "  $SKILL_DEST/scripts/create-worktree-workspace.sh --repo sentry --branch feat/try-worktree"
+echo "  $SKILL_DEST/scripts/manage-worktree-workspace.sh --repo sentry --branch feat/try-worktree"
 echo
-echo "Or in Cursor: ask the agent to use the create-worktree-workspace skill."
+echo "Or in Cursor: ask the agent to use the manage-worktree-workspace skill."
 echo "Repos: CODE_ROOT=\$HOME/code (override if your checkouts live elsewhere)."
